@@ -79,3 +79,48 @@ body {
   color: var(--text-meta);
   margin-top: 6px;
 }
+
+/* RSVP mode */
+
+.rsvp {
+  background: var(--deep-dark);
+  border-radius: 12px;
+  max-width: 720px;
+  margin: 32px auto;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.rsvp-meta,
+.rsvp-hint {
+  font-size: 11px;
+  color: var(--text-meta);
+}
+
+.rsvp-meta {
+  margin-bottom: 16px;
+}
+
+.rsvp-hint {
+  margin-top: 16px;
+  color: var(--text-secondary);
+}
+
+.rsvp-guide {
+  width: 1px;
+  height: 12px;
+  background: #4d4c48;
+}
+
+.rsvp-word {
+  font-family: var(--font-serif);
+  color: var(--ivory);
+  min-height: 1.4em;
+}
+
+.rsvp-word .orp {
+  color: var(--ink-light);
+}
