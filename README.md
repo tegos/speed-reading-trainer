@@ -57,7 +57,7 @@ npm test         # unit tests (Vitest)
 npm run build    # typecheck + production build
 ```
 
-Vanilla TypeScript + Vite, no runtime dependencies. Pushes to `main` deploy to GitHub Pages automatically (tests run in CI first).
+Vanilla TypeScript + Vite, no runtime dependencies.
 
 ## The science
 
@@ -66,3 +66,7 @@ Built on reading research (Rayner et al., 2016, *So Much to Read, So Little Time
 - Chunk highlighting works as a **pacer**, not as “reading word groups” — the benefit is rhythm, not magic.
 - **Regressions** (re-reading) matter for comprehension — hence click-to-rewind instead of forced forward-only flow.
 - Speeds above ~600 wpm trade away comprehension, so the slider deliberately stops there.
+
+## License
+
+[MIT](LICENSE)

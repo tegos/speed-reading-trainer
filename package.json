@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Speed reading trainer: book pacer + RSVP, zero runtime dependencies",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

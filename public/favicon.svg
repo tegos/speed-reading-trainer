@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- parchment page -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#f5f4ed" stroke="#1b365d" stroke-width="3"/>
+  <!-- text lines -->
+  <g stroke-linecap="round">
+    <line x1="14" y1="18" x2="50" y2="18" stroke="#1b365d" stroke-opacity="0.35" stroke-width="5"/>
+    <!-- highlighted chunk (the pacer) -->
+    <line x1="14" y1="32" x2="36" y2="32" stroke="#1b365d" stroke-width="9"/>
+    <line x1="42" y1="32" x2="50" y2="32" stroke="#1b365d" stroke-opacity="0.35" stroke-width="5"/>
+    <line x1="14" y1="46" x2="44" y2="46" stroke="#1b365d" stroke-opacity="0.35" stroke-width="5"/>
+  </g>
+</svg>
