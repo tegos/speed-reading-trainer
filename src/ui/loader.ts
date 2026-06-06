@@ -50,7 +50,9 @@ export function mountLoader(store: Store<State>): { openFile(): void } {
   document.body.append(input);
 
   function loadFile(file: File | undefined): void {
-    if (!file || !file.type.match('text.*')) {
+    const isText =
+      file && (/^text\//.test(file.type) || (file.type === '' && file.name.endsWith('.txt')));
+    if (!file || !isText) {
       toast('Not a text file — drop or pick a .txt');
       return;
     }
@@ -66,6 +68,8 @@ export function mountLoader(store: Store<State>): { openFile(): void } {
   });
 
   document.addEventListener('paste', (e) => {
+    const active = document.activeElement;
+    if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) return;
     const text = e.clipboardData?.getData('text') ?? '';
     if (text.trim()) {
       e.preventDefault();
