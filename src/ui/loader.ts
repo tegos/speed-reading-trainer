@@ -1,6 +1,7 @@
 import { splitWords } from '../engine';
 import type { Store } from '../store';
 import type { LibraryText, State } from '../types';
+import { PASTE_KEYS } from './platform';
 
 export function makeTitle(content: string): string {
   const firstLine = content.trim().split('\n')[0].trim();
@@ -104,7 +105,7 @@ export function mountLoader(store: Store<State>): {
   /** Toolbar "Paste" button: Clipboard API with a hotkey fallback hint. */
   function pasteFromClipboard(): void {
     if (!navigator.clipboard?.readText) {
-      toast('Clipboard unavailable — press Ctrl+V instead');
+      toast(`Clipboard unavailable — press ${PASTE_KEYS} instead`);
       return;
     }
     navigator.clipboard.readText().then(
@@ -112,7 +113,7 @@ export function mountLoader(store: Store<State>): {
         if (text.trim()) addText(store, text);
         else toast('Clipboard has no text');
       },
-      () => toast('Clipboard access denied — press Ctrl+V instead'),
+      () => toast(`Clipboard access denied — press ${PASTE_KEYS} instead`),
     );
   }
 
