@@ -25,3 +25,57 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
 }
+
+/* Book mode */
+
+.book {
+  max-width: 68ch;
+  margin: 0 auto;
+  padding: 32px 16px 16px;
+}
+
+.book-text {
+  font-family: var(--font-serif);
+  line-height: 1.85;
+  user-select: none;
+}
+
+.book-text .word {
+  border-radius: 3px;
+  padding: 0 1px;
+  cursor: pointer;
+}
+
+.book-text .word.read {
+  color: var(--text-faded);
+}
+
+.book-text .word.active {
+  background: var(--tag-bg);
+  color: var(--brand);
+}
+
+.book-progress {
+  margin-top: 24px;
+}
+
+.book-progress-track {
+  height: 3px;
+  background: var(--warm-sand);
+  border-radius: 2px;
+}
+
+.book-progress-fill {
+  height: 100%;
+  background: var(--brand);
+  border-radius: 2px;
+  transition: width 0.2s;
+}
+
+.book-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-meta);
+  margin-top: 6px;
+}
