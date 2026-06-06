@@ -4,6 +4,10 @@ Train your reading speed in the browser. Two modes, zero runtime dependencies, a
 
 **[Try it live →](https://tegos.github.io/speed-reading-trainer/)**
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/tegos/speed-reading-trainer/main/assets/hero.webp" alt="Demo: Book mode pacer highlighting chunks, then RSVP mode flashing words with ORP accent" width="880">
+</p>
+
 ## Why
 
 Most adults read at 200–300 wpm. Reading faster is mostly a pacing problem: the eyes wander, re-read out of habit, and linger longer than recognition requires. This trainer gives your eyes a metronome — a moving highlight or a flashing word — so you read at a deliberate, gradually increasing pace instead of an accidental one.
