@@ -5,6 +5,8 @@
   "type": "module",
   "description": "Speed reading trainer: book pacer + RSVP, zero runtime dependencies",
   "license": "MIT",
+  "repository": "github:tegos/speed-reading-trainer",
+  "homepage": "https://tegos.github.io/speed-reading-trainer/",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

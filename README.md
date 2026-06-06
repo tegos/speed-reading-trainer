@@ -18,7 +18,7 @@ A warm paper page. A moving highlight over a chunk of 1–5 words paces your eye
 
 ### RSVP
 
-A dark stage showing one word at a time, centered, with the optimal recognition point (ORP) letter accented so your eyes never have to move. Pauses automatically: ×2 at punctuation, ×1.5 at long words.
+A dark stage showing one word at a time, centered, with the optimal recognition point (ORP) letter accented so your eyes never have to move. Pauses automatically: ×2 at sentence-ending punctuation, ×1.3 at commas, ×1.5 at long words.
 
 ## Usage
 
@@ -44,7 +44,7 @@ A dark stage showing one word at a time, centered, with the optimal recognition 
 - Text library with per-text progress, stored in localStorage
 - Session stats with an SVG wpm chart
 - Click-to-rewind in Book mode
-- Auto-pauses at punctuation and long words in RSVP mode
+- Auto-pauses at punctuation, commas, and long words in RSVP mode
 - Platform-aware shortcut labels (`⌘` on macOS)
 - No accounts, no servers, no tracking — everything stays in your browser
 
