@@ -1,6 +1,7 @@
 import { chunkEnd, minutesLeft } from '../engine';
 import type { Store } from '../store';
 import type { State } from '../types';
+import { OPEN_KEYS, PASTE_KEYS } from '../ui/platform';
 
 /** Book mode: word spans, chunk highlight, click-to-rewind, progress bar. */
 export function mountBook(el: HTMLElement, store: Store<State>): void {
@@ -27,7 +28,7 @@ export function mountBook(el: HTMLElement, store: Store<State>): void {
     if (!words.length) {
       const hint = document.createElement('p');
       hint.className = 'book-empty';
-      hint.textContent = 'Paste text (Ctrl+V), open a file (Ctrl+O), or drop a .txt anywhere';
+      hint.textContent = `Paste text (${PASTE_KEYS}), open a file (${OPEN_KEYS}), or drop a .txt anywhere`;
       textEl.append(hint);
       renderedWords = words;
       return;

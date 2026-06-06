@@ -19,6 +19,7 @@ import { bindHotkeys, mountHeader, mountToolbar } from './ui/toolbar';
 import { mountLoader, toast } from './ui/loader';
 import { DEMO_TEXT } from './demo-text';
 import type { LibraryText, State } from './types';
+import { OPEN_KEYS, PASTE_KEYS } from './ui/platform';
 
 // --- state ---
 
@@ -82,7 +83,7 @@ const player = createPlayer({
 function start(): void {
   const state = store.get();
   if (!state.words.length) {
-    toast('No text — paste (Ctrl+V) or open a file (Ctrl+O)');
+    toast(`No text — paste (${PASTE_KEYS}) or open a file (${OPEN_KEYS})`);
     return;
   }
   if (state.position >= state.words.length) store.set({ position: 0 });
@@ -105,6 +106,7 @@ function stop(): void {
 const hooks = {
   onTogglePlay: () => (store.get().running ? stop() : start()),
   onOpenFile: () => loader.openFile(),
+  onPaste: () => loader.pasteFromClipboard(),
   onReset: () => {
     stop();
     store.set({ position: 0 });

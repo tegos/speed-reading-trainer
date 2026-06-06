@@ -1,6 +1,7 @@
 import { splitWords } from '../engine';
 import type { Store } from '../store';
 import type { LibraryText, State } from '../types';
+import { PASTE_KEYS } from './platform';
 
 export function makeTitle(content: string): string {
   const firstLine = content.trim().split('\n')[0].trim();
@@ -41,8 +42,11 @@ export function toast(message: string): void {
   toastTimer = setTimeout(() => el!.classList.remove('show'), 3000);
 }
 
-/** Wires paste, hidden file input, and window drag&drop. Returns openFile trigger. */
-export function mountLoader(store: Store<State>): { openFile(): void } {
+/** Wires paste, hidden file input, and window drag&drop. Returns openFile/pasteFromClipboard triggers. */
+export function mountLoader(store: Store<State>): {
+  openFile(): void;
+  pasteFromClipboard(): void;
+} {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'text/plain';
@@ -79,11 +83,39 @@ export function mountLoader(store: Store<State>): { openFile(): void } {
     }
   });
 
+  // visual drop target: highlight the whole window while a file is dragged over it
+  let dragDepth = 0;
+  document.addEventListener('dragenter', (e) => {
+    e.preventDefault();
+    dragDepth += 1;
+    document.body.classList.add('dragging');
+  });
+  document.addEventListener('dragleave', () => {
+    dragDepth = Math.max(0, dragDepth - 1);
+    if (dragDepth === 0) document.body.classList.remove('dragging');
+  });
   document.addEventListener('dragover', (e) => e.preventDefault());
   document.addEventListener('drop', (e) => {
     e.preventDefault();
+    dragDepth = 0;
+    document.body.classList.remove('dragging');
     loadFile(e.dataTransfer?.files[0]);
   });
 
-  return { openFile: () => input.click() };
+  /** Toolbar "Paste" button: Clipboard API with a hotkey fallback hint. */
+  function pasteFromClipboard(): void {
+    if (!navigator.clipboard?.readText) {
+      toast(`Clipboard unavailable — press ${PASTE_KEYS} instead`);
+      return;
+    }
+    navigator.clipboard.readText().then(
+      (text) => {
+        if (text.trim()) addText(store, text);
+        else toast('Clipboard has no text');
+      },
+      () => toast(`Clipboard access denied — press ${PASTE_KEYS} instead`),
+    );
+  }
+
+  return { openFile: () => input.click(), pasteFromClipboard };
 }

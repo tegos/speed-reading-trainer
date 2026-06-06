@@ -1,6 +1,7 @@
 import { splitWords } from '../engine';
 import type { Store } from '../store';
 import type { State } from '../types';
+import { OPEN_KEYS, PASTE_KEYS } from '../ui/platform';
 
 export function mountLibrary(el: HTMLElement, store: Store<State>): void {
   let renderedKey = ''; // skip full rebuild when list contents are unchanged (e.g. playback ticks)
@@ -19,7 +20,7 @@ export function mountLibrary(el: HTMLElement, store: Store<State>): void {
     el.innerHTML = `<div class="panel"><h2>Library</h2><ul class="library-list"></ul></div>`;
     const list = el.querySelector<HTMLElement>('.library-list')!;
     if (!state.library.length) {
-      list.innerHTML = '<li class="empty">Paste text (Ctrl+V) or open a file (Ctrl+O)</li>';
+      list.innerHTML = `<li class="empty">Paste text (${PASTE_KEYS}) or open a file (${OPEN_KEYS})</li>`;
       return;
     }
     for (const text of state.library) {
