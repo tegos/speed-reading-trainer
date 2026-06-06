@@ -122,6 +122,15 @@ store.subscribe((state) => {
   rsvpEl.style.display = state.settings.mode === 'rsvp' ? '' : 'none';
 });
 
+// switching mode mid-run keeps the timer on the wrong delay model — pause instead
+let lastMode = store.get().settings.mode;
+store.subscribe((state) => {
+  if (state.settings.mode !== lastMode) {
+    lastMode = state.settings.mode;
+    if (state.running) stop();
+  }
+});
+
 // external running:false (e.g. loader on new text) must actually stop the player
 store.subscribe((state) => {
   if (!state.running && player.running) stop();
@@ -131,15 +140,24 @@ store.set({}); // initial paint
 
 // --- persistence ---
 
+function persistNow(state: State): void {
+  const library = state.library.map((t) =>
+    t.id === state.settings.activeTextId ? { ...t, position: state.position } : t,
+  );
+  if (!save({ settings: state.settings, library, sessions: state.sessions })) {
+    toast('Storage full — text too large to save');
+  }
+}
+
 let saveTimer: ReturnType<typeof setTimeout> | undefined;
 store.subscribe((state) => {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    const library = state.library.map((t) =>
-      t.id === state.settings.activeTextId ? { ...t, position: state.position } : t,
-    );
-    if (!save({ settings: state.settings, library, sessions: state.sessions })) {
-      toast('Storage full — text too large to save');
-    }
-  }, 500);
+  saveTimer = setTimeout(() => persistNow(state), 500);
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    clearTimeout(saveTimer);
+    persistNow(store.get());
+  }
 });
