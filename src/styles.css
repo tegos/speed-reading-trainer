@@ -124,3 +124,88 @@ body {
 .rsvp-word .orp {
   color: var(--ink-light);
 }
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: var(--ivory);
+  border-bottom: 1px solid var(--border);
+}
+
+.header h1 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  margin-right: auto;
+}
+
+.header button,
+.toolbar button {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--warm-sand);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.header button.active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--ivory);
+}
+
+/* Toolbar */
+
+.toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: var(--ivory);
+  border-top: 1px solid var(--border);
+}
+
+.toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.toolbar input[type='range'] {
+  accent-color: var(--brand);
+}
+
+.toolbar input[type='number'] {
+  width: 52px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--ivory);
+}
+
+.toolbar .play {
+  background: var(--brand);
+  color: var(--ivory);
+  border-color: var(--brand);
+  min-width: 44px;
+}
+
+body {
+  padding-bottom: 64px; /* room for fixed toolbar */
+}
