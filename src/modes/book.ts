@@ -34,6 +34,17 @@ export function mountBook(el: HTMLElement, store: Store<State>): void {
     renderedWords = words;
   }
 
+  /** Keep the active chunk visible while the pacer runs. */
+  function scrollChunkIntoView(span: HTMLElement): void {
+    if (typeof span.scrollIntoView !== 'function') return; // jsdom
+    const rect = span.getBoundingClientRect();
+    const headerRoom = 80; // sticky header + breathing space
+    const toolbarRoom = 96; // fixed bottom toolbar
+    if (rect.top < headerRoom || rect.bottom > window.innerHeight - toolbarRoom) {
+      span.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }
+
   function render(state: State): void {
     if (state.words !== renderedWords) rebuild(state.words);
     textEl.style.fontSize = `${state.settings.fontSize}px`;
@@ -43,6 +54,7 @@ export function mountBook(el: HTMLElement, store: Store<State>): void {
       span.classList.toggle('read', i < state.position);
       span.classList.toggle('active', i >= state.position && i < end);
     });
+    if (state.running && spans[state.position]) scrollChunkIntoView(spans[state.position]);
     const pct = state.words.length ? Math.round((state.position / state.words.length) * 100) : 0;
     fillEl.style.width = `${pct}%`;
     pctEl.textContent = `${pct}%`;

@@ -17,11 +17,26 @@ import { mountLibrary } from './panels/library';
 import { mountStats } from './panels/stats';
 import { bindHotkeys, mountHeader, mountToolbar } from './ui/toolbar';
 import { mountLoader, toast } from './ui/loader';
-import type { State } from './types';
+import { DEMO_TEXT } from './demo-text';
+import type { LibraryText, State } from './types';
 
 // --- state ---
 
 const persisted = load();
+
+// fresh profile → seed the standard reading test so there is something to read
+if (!persisted.library.length && !persisted.sessions.length) {
+  const demo: LibraryText = {
+    id: 'demo',
+    title: 'How fast can you read?',
+    content: DEMO_TEXT,
+    position: 0,
+    addedAt: Date.now(),
+  };
+  persisted.library = [demo];
+  persisted.settings = { ...persisted.settings, activeTextId: demo.id };
+}
+
 const activeText = persisted.library.find((t) => t.id === persisted.settings.activeTextId) ?? null;
 
 const store = createStore<State>({
