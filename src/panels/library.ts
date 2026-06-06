@@ -3,9 +3,19 @@ import type { Store } from '../store';
 import type { State } from '../types';
 
 export function mountLibrary(el: HTMLElement, store: Store<State>): void {
+  let renderedKey = ''; // skip full rebuild when list contents are unchanged (e.g. playback ticks)
+
   function render(state: State): void {
     el.classList.toggle('open', state.overlay === 'library');
-    if (state.overlay !== 'library') return;
+    if (state.overlay !== 'library') {
+      renderedKey = '';
+      return;
+    }
+    const key =
+      state.library.map((t) => `${t.id}:${t.position}`).join('|') +
+      `@${state.settings.activeTextId}`;
+    if (key === renderedKey) return;
+    renderedKey = key;
     el.innerHTML = `<div class="panel"><h2>Library</h2><ul class="library-list"></ul></div>`;
     const list = el.querySelector<HTMLElement>('.library-list')!;
     if (!state.library.length) {
