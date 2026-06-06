@@ -221,6 +221,29 @@ body {
   padding-bottom: 64px; /* room for fixed toolbar */
 }
 
+.hotkeys-hint {
+  font-size: 11px;
+  color: var(--text-meta);
+}
+
+/* Drag&drop visual target */
+
+body.dragging::after {
+  content: 'Drop a .txt file to load it';
+  position: fixed;
+  inset: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--brand);
+  border-radius: 12px;
+  background: rgb(245 244 237 / 0.85);
+  color: var(--brand);
+  font-size: 16px;
+  z-index: 100;
+  pointer-events: none;
+}
+
 /* Toast */
 
 .toast {

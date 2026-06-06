@@ -5,6 +5,7 @@ import type { Mode, State } from '../types';
 export interface ToolbarHooks {
   onTogglePlay(): void;
   onOpenFile(): void;
+  onPaste(): void;
   onReset(): void;
 }
 
@@ -48,8 +49,8 @@ export function mountHeader(el: HTMLElement, store: Store<State>): void {
 export function mountToolbar(el: HTMLElement, store: Store<State>, hooks: ToolbarHooks): void {
   el.innerHTML = `
     <div class="toolbar">
-      <button type="button" class="play">▶</button>
-      <label>Speed <b class="wpm-value"></b> wpm
+      <button type="button" class="play" title="Space">▶</button>
+      <label title="← → ±25 wpm">Speed <b class="wpm-value"></b> wpm
         <input class="wpm" type="range" min="${WPM_MIN}" max="${WPM_MAX}" step="10">
       </label>
       <label>Chunk <b class="chunk-value"></b>
@@ -59,9 +60,17 @@ export function mountToolbar(el: HTMLElement, store: Store<State>, hooks: Toolba
         <input class="font" type="number" min="14" max="24">
       </label>
       <label class="auto"><input class="autoprogress" type="checkbox"> +10 wpm / 2 min</label>
-      <button type="button" class="open">Open file</button>
-      <button type="button" class="reset">Reset</button>
+      <button type="button" class="paste" title="Ctrl+V">Paste</button>
+      <button type="button" class="open" title="Ctrl+O">Open file</button>
+      <button type="button" class="reset" title="F5">Reset</button>
+      <span class="hotkeys-hint">Space play/pause · ← → speed · F5 reset</span>
     </div>`;
+
+  // mouse clicks leave buttons focused, which makes Space activate the button
+  // instead of the global play/pause hotkey — drop focus after click
+  el.addEventListener('click', (e) => {
+    if (e.target instanceof HTMLButtonElement) e.target.blur();
+  });
 
   const q = <T extends HTMLElement>(sel: string) => el.querySelector<T>(sel)!;
   const playBtn = q<HTMLButtonElement>('.play');
@@ -81,6 +90,7 @@ export function mountToolbar(el: HTMLElement, store: Store<State>, hooks: Toolba
     if (v >= 14 && v <= 24) patchSettings({ fontSize: v });
   });
   autoInput.addEventListener('change', () => patchSettings({ autoProgress: autoInput.checked }));
+  q<HTMLButtonElement>('.paste').addEventListener('click', hooks.onPaste);
   q<HTMLButtonElement>('.open').addEventListener('click', hooks.onOpenFile);
   q<HTMLButtonElement>('.reset').addEventListener('click', hooks.onReset);
 

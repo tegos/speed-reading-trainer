@@ -105,6 +105,7 @@ function stop(): void {
 const hooks = {
   onTogglePlay: () => (store.get().running ? stop() : start()),
   onOpenFile: () => loader.openFile(),
+  onPaste: () => loader.pasteFromClipboard(),
   onReset: () => {
     stop();
     store.set({ position: 0 });
