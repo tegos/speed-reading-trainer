@@ -40,6 +40,14 @@ body {
   user-select: none;
 }
 
+.book-empty {
+  text-align: center;
+  color: var(--text-meta);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 48px 0;
+}
+
 .book-text .word {
   border-radius: 3px;
   padding: 0 1px;

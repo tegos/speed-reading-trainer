@@ -24,8 +24,8 @@ import type { LibraryText, State } from './types';
 
 const persisted = load();
 
-// fresh profile → seed the standard reading test so there is something to read
-if (!persisted.library.length && !persisted.sessions.length) {
+// empty library → seed the standard reading test so there is always something to read
+if (!persisted.library.length) {
   const demo: LibraryText = {
     id: 'demo',
     title: 'How fast can you read?',
@@ -37,10 +37,14 @@ if (!persisted.library.length && !persisted.sessions.length) {
   persisted.settings = { ...persisted.settings, activeTextId: demo.id };
 }
 
-const activeText = persisted.library.find((t) => t.id === persisted.settings.activeTextId) ?? null;
+// dangling activeTextId (text deleted in a past session) → fall back to the first text
+const activeText =
+  persisted.library.find((t) => t.id === persisted.settings.activeTextId) ??
+  persisted.library[0] ??
+  null;
 
 const store = createStore<State>({
-  settings: activeText ? persisted.settings : { ...persisted.settings, activeTextId: null },
+  settings: { ...persisted.settings, activeTextId: activeText?.id ?? null },
   library: persisted.library,
   sessions: persisted.sessions,
   words: activeText ? splitWords(activeText.content) : [],

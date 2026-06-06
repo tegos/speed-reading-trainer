@@ -24,6 +24,14 @@ export function mountBook(el: HTMLElement, store: Store<State>): void {
 
   function rebuild(words: string[]): void {
     textEl.textContent = '';
+    if (!words.length) {
+      const hint = document.createElement('p');
+      hint.className = 'book-empty';
+      hint.textContent = 'Paste text (Ctrl+V), open a file (Ctrl+O), or drop a .txt anywhere';
+      textEl.append(hint);
+      renderedWords = words;
+      return;
+    }
     words.forEach((word, i) => {
       const span = document.createElement('span');
       span.className = 'word';

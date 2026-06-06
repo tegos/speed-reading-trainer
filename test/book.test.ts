@@ -45,4 +45,12 @@ describe('mountBook', () => {
     store.set({ words: ['a', 'b'], position: 0 });
     expect(el.querySelectorAll('span.word')).toHaveLength(2);
   });
+
+  it('shows an empty-state hint when there are no words', () => {
+    const store = createStore(makeState({ words: [], position: 0 }));
+    const el = document.createElement('div');
+    mountBook(el, store);
+    expect(el.querySelector('.book-empty')).not.toBeNull();
+    expect(el.querySelector('.book-empty')!.textContent).toContain('Ctrl+V');
+  });
 });
