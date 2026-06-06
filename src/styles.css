@@ -209,3 +209,25 @@ body {
 body {
   padding-bottom: 64px; /* room for fixed toolbar */
 }
+
+/* Toast */
+
+.toast {
+  position: fixed;
+  bottom: 72px;
+  left: 50%;
+  transform: translate(-50%, 8px);
+  background: var(--deep-dark);
+  color: var(--ivory);
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
