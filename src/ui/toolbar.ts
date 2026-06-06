@@ -101,16 +101,14 @@ export function mountToolbar(el: HTMLElement, store: Store<State>, hooks: Toolba
 export function bindHotkeys(store: Store<State>, hooks: ToolbarHooks): void {
   document.addEventListener('keydown', (e) => {
     const settings = store.get().settings;
-    if (
-      e.code === 'Space' &&
-      !(e.target instanceof HTMLInputElement) &&
-      !(e.target instanceof HTMLButtonElement)
-    ) {
+    const onControl =
+      e.target instanceof HTMLInputElement || e.target instanceof HTMLButtonElement;
+    if (e.code === 'Space' && !onControl) {
       e.preventDefault();
       hooks.onTogglePlay();
-    } else if (e.key === 'ArrowRight' && !(e.target instanceof HTMLInputElement)) {
+    } else if (e.key === 'ArrowRight' && !onControl) {
       store.set({ settings: { ...settings, wpm: Math.min(settings.wpm + 25, WPM_MAX) } });
-    } else if (e.key === 'ArrowLeft' && !(e.target instanceof HTMLInputElement)) {
+    } else if (e.key === 'ArrowLeft' && !onControl) {
       store.set({ settings: { ...settings, wpm: Math.max(settings.wpm - 25, WPM_MIN) } });
     } else if (e.key === 'F5') {
       e.preventDefault();
