@@ -1,8 +1,18 @@
 :root {
-  --primary: #00bcd4;
-  --primary-dark: #0097a7;
-  --surface: #f5f5f5;
-  --text: #212121;
+  --parchment: #f5f4ed;
+  --ivory: #faf9f5;
+  --warm-sand: #e8e6dc;
+  --deep-dark: #141413;
+  --brand: #1b365d;
+  --ink-light: #2d5a8a;
+  --tag-bg: #e4ecf5;
+  --text: #141413;
+  --text-secondary: #5e5d59;
+  --text-meta: #87867f;
+  --text-faded: #b0aea5;
+  --border: #e8e5da;
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
 }
 
 * {
@@ -11,217 +21,7 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--parchment);
   color: var(--text);
-  background: #fff;
-}
-
-.app-bar {
-  background: var(--primary);
-  color: #fff;
-  padding: 12px 24px;
-}
-
-.app-bar h1 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-/* Toolbar */
-
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 16px;
-  background: var(--surface);
-  border-bottom: 1px solid #ddd;
-}
-
-.toolbar-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.toolbar-group + .toolbar-group {
-  border-left: 1px solid #ddd;
-  padding-left: 16px;
-}
-
-.toolbar label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.toolbar button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  background: #fff;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
-  cursor: pointer;
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.toolbar button:hover {
-  background: #eee;
-}
-
-.toolbar button.active {
-  background: var(--primary);
-  color: #fff;
-}
-
-.run-button {
-  font-size: 16px;
-  min-width: 44px;
-  justify-content: center;
-  background: var(--primary) !important;
-  color: #fff;
-}
-
-.run-button:hover {
-  background: var(--primary-dark) !important;
-}
-
-.speed-value {
-  display: inline-block;
-  min-width: 40px;
-  text-align: right;
-}
-
-.toolbar input[type='range'] {
-  width: 180px;
-  accent-color: var(--primary);
-}
-
-.toolbar input[type='number'] {
-  width: 60px;
-  padding: 4px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.hint {
-  font-size: 12px;
-  color: #757575;
-}
-
-/* Margin slider (dual-handle) */
-
-.margin-slider {
-  position: relative;
-  height: 24px;
-  margin: 8px 16px 0;
-}
-
-.margin-slider input[type='range'] {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  margin: 0;
-  background: none;
-  pointer-events: none;
-  appearance: none;
-  accent-color: var(--primary);
-}
-
-.margin-slider input[type='range']::-webkit-slider-thumb {
-  pointer-events: auto;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  margin-top: 4px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  border: 2px solid var(--primary);
-  cursor: grab;
-}
-
-.margin-slider input[type='range']::-moz-range-thumb {
-  pointer-events: auto;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  border: 2px solid var(--primary);
-  cursor: grab;
-}
-
-.margin-slider::before {
-  content: '';
-  position: absolute;
-  top: 11px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: #000;
-  border-radius: 2px;
-}
-
-.margin-slider-track {
-  position: absolute;
-  top: 11px;
-  height: 3px;
-  background: var(--primary);
-  border-radius: 2px;
-}
-
-/* Reader zone */
-
-.reader-zone {
-  padding: 24px 8px;
-  line-height: 1.6;
-  transition: margin 0.1s;
-}
-
-.reader-zone .read {
-  background: var(--primary);
-  color: #fff;
-  border-radius: 2px;
-  transition: background 0.3s;
-}
-
-.unselectable {
-  user-select: none;
-}
-
-/* Error dialog */
-
-.error-dialog {
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgb(0 0 0 / 0.3);
-  padding: 24px;
-  min-width: 320px;
-}
-
-.error-dialog::backdrop {
-  background: rgb(0 0 0 / 0.5);
-}
-
-.error-dialog h2 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-.error-dialog button {
-  padding: 8px 24px;
-  border: none;
-  border-radius: 4px;
-  background: var(--primary);
-  color: #fff;
-  cursor: pointer;
-  float: right;
-}
-
-.error-dialog button:hover {
-  background: var(--primary-dark);
+  font-family: var(--font-sans);
 }
