@@ -24,4 +24,15 @@ describe('createStore', () => {
     s.set({ a: 2 });
     expect(fn).not.toHaveBeenCalled();
   });
+
+  it('listener unsubscribing itself during notification does not break others', () => {
+    const s = createStore({ a: 1 });
+    const fn2 = vi.fn();
+    const fn1 = vi.fn(() => off1());
+    const off1 = s.subscribe(fn1);
+    s.subscribe(fn2);
+    s.set({ a: 2 });
+    expect(fn1).toHaveBeenCalledWith({ a: 2 });
+    expect(fn2).toHaveBeenCalledWith({ a: 2 });
+  });
 });
