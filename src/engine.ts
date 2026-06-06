@@ -24,8 +24,8 @@ export function tickMs(wpm: number, chunkSize: number): number {
 export function rsvpDelayMs(word: string, wpm: number): number {
   const base = 60_000 / wpm;
   let mult = 1;
-  if (/[.!?;:]["')\]]?$/.test(word)) mult = 2;
-  else if (/,["')\]]?$/.test(word)) mult = 1.3;
+  if (/[.!?;:]["''"»)\]]?$/.test(word)) mult = 2;
+  else if (/,["''"»)\]]?$/.test(word)) mult = 1.3;
   const letters = word.replace(/[^\p{L}\p{N}]/gu, '').length;
   if (letters >= 8) mult = Math.max(mult, 1.5);
   return base * mult;
@@ -33,6 +33,7 @@ export function rsvpDelayMs(word: string, wpm: number): number {
 
 /** Optimal recognition point: ~35% into the word. */
 export function orpIndex(word: string): number {
+  if (word.length === 0) return 0;
   return Math.round((word.length - 1) * 0.35);
 }
 
@@ -57,13 +58,13 @@ export function finishSession(
   position: number,
 ): Session | null {
   const ms = now - tracker.startedAt;
-  if (ms < MIN_SESSION_MS) return null;
   const words = position - tracker.startPosition;
-  const minutes = ms / 60_000;
+  if (ms < MIN_SESSION_MS || words <= 0) return null;
+  const minutes = Math.round((ms / 60_000) * 100) / 100;
   return {
     date: tracker.startedAt,
     words,
-    minutes: Math.round(minutes * 100) / 100,
+    minutes,
     wpm: Math.round(words / minutes),
   };
 }

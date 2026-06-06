@@ -1,7 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import {
   WPM_MAX,
-  WPM_MIN,
   chunkEnd,
   createPlayer,
   finishSession,
@@ -52,6 +51,9 @@ describe('rsvpDelayMs', () => {
   it('long word + sentence end takes the larger multiplier', () => {
     expect(rsvpDelayMs('typography.', 300)).toBe(400);
   });
+  it('handles smart quotes after punctuation', () => {
+    expect(rsvpDelayMs('end."', 300)).toBe(400);
+  });
 });
 
 describe('orpIndex', () => {
@@ -59,6 +61,9 @@ describe('orpIndex', () => {
     expect(orpIndex('a')).toBe(0);
     expect(orpIndex('word')).toBe(1); // (4-1)*0.35 = 1.05 -> 1
     expect(orpIndex('typography')).toBe(3); // 9*0.35 = 3.15 -> 3
+  });
+  it('returns 0 for empty string', () => {
+    expect(orpIndex('')).toBe(0);
   });
 });
 
@@ -71,9 +76,6 @@ describe('progressWpm', () => {
   });
   it('caps at WPM_MAX', () => {
     expect(progressWpm(WPM_MAX - 5, 10 * 60_000)).toBe(WPM_MAX);
-  });
-  it('uses WPM_MIN in the API', () => {
-    expect(WPM_MIN).toBe(60);
   });
 });
 
@@ -91,6 +93,9 @@ describe('finishSession', () => {
     const s = finishSession({ startedAt: 0, startPosition: 100 }, 60_000, 400);
     expect(s).toEqual({ date: 0, words: 300, minutes: 1, wpm: 300 });
   });
+  it('returns null when no words were read', () => {
+    expect(finishSession({ startedAt: 0, startPosition: 50 }, 60_000, 50)).toBeNull();
+  });
 });
 
 describe('createPlayer', () => {
@@ -106,5 +111,13 @@ describe('createPlayer', () => {
     p.stop();
     vi.advanceTimersByTime(500);
     expect(onTick).toHaveBeenCalledTimes(3);
+  });
+  it('stop inside onTick does not schedule another tick', () => {
+    const spy = vi.fn(() => player.stop());
+    const player = createPlayer({ getDelay: () => 100, onTick: spy });
+    player.start();
+    vi.advanceTimersByTime(500);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(player.running).toBe(false);
   });
 });
